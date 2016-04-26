@@ -34,7 +34,7 @@ int main()
             for (short i = 0; i < al.size(); ++i)
             {
                 cout<<airlines.find(al.at(i))->second<<" or ";
-                if ( i && !((i-2)%3))
+                if ( i && !((i-2)%3) && i != (al.size() - 1))
                     cout<<"\n       ";
             }
             cout<<"\b\b\b\b.    \n";
