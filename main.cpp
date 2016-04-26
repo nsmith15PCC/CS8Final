@@ -27,15 +27,23 @@ int main()
         for (vector<route>::iterator it = path.begin(); it != path.end(); ++it)
         {
             airport a1 = airports.find(it->origin)->second, a2 = airports.find(it->destination)->second;
-            string al = airlines.find(it->airline)->second;
+            vector<string> al = it->airline;
+            sort(al.begin(), al.end());
             cout<<"Fly "<<it->distance<<" miles"<<endl<<"    from "<<it->origin<<" ("<<a1.name<<")\n    to "
-               <<it->destination<<" ("<<a2.name<<")\n    on "
-              <<al<<".\n";
+               <<it->destination<<" ("<<a2.name<<")\n    on ";
+            for (short i = 0; i < al.size(); ++i)
+            {
+                cout<<airlines.find(al.at(i))->second<<" or ";
+                if ( i && !((i-2)%3))
+                    cout<<"\n       ";
+            }
+            cout<<"\b\b\b\b.    \n";
+//              <<al<<".\n";
         }
 
         cout<<"Calculate another path? ";
         getline (cin, again);
     }
-    while (toupper(again.at(0)) == 'Y');
+    while (again.size() && toupper(again.at(0)) == 'Y');
     return 0;
 }

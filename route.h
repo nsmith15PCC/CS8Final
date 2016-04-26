@@ -15,9 +15,11 @@
 using namespace std;
 struct route
 {
-string origin, destination;
-string airline;
-double distance;
+    string origin, destination;
+    vector<string> airline;
+    double distance;
+    
+    route& operator+=(const route &other);
 };
 
 bool operator<(const route &x, const route &y);

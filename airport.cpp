@@ -4,7 +4,7 @@ void createAirports (map<string, airport> &airports)
 {
     ifstream ifs("airports.dat");
     string line;
-
+    
     while (getline(ifs, line))
     {
         size_t pos;
@@ -13,9 +13,9 @@ void createAirports (map<string, airport> &airports)
         string num;
         while ((pos = line.find('"'))< string::npos)
             line.erase(pos,1);
-
+        
         pos = line.find(',');
-
+        
         ap.name = line.substr(pos + 1, line.find(',', pos + 1) - (pos + 1));
         for (size_t i = 0; i < 3; ++i)
             pos = line.find(',', pos + 1);
@@ -32,7 +32,7 @@ void createAirports (map<string, airport> &airports)
         ss >> ap.longitude;
         airports.insert(pair<string, airport> (ap.IATA, ap));
     }
-
+    
     ifs.close();
 }
 
@@ -40,12 +40,12 @@ void createConnections (map<string, airport> &airports)
 {
     ifstream ifs("routes.dat");
     string line;
-
+    
     while (getline(ifs, line))
     {
         route root;
         size_t pos = line.find(',');
-        root.airline = line.substr(0, pos);
+        root.airline.push_back(line.substr(0, pos));
         pos = line.find(',', pos + 1);
         root.origin = line.substr(pos+1, line.find(',', pos + 1) - (pos + 1));
         pos = line.find(',', pos + 1);
@@ -54,19 +54,26 @@ void createConnections (map<string, airport> &airports)
         if (airports.find(root.origin) != airports.end() && airports.find(root.destination) != airports.end())
         {
             root.distance = greatCircle( airports.find(root.origin)->second, airports.find(root.destination)->second );
+            airport org = airports.find(root.origin)->second;
+            set<route> rts = org.connections;
+            if (rts.find(root) != rts.end())
+            {
+                root += *rts.find(root);
+                airports.find(root.origin)->second.connections.erase(root);
+            }
             airports.find(root.origin)->second.connections.insert(root);
         }
     }
-
+    
     map<string, airport>::iterator it = airports.begin();
     while (it != airports.end())
         if (it->second.connections.empty())
             airports.erase(it++);
         else
             ++it;
-
+    
     ifs.close();
-
+    
 }
 
 double greatCircle (airport ap1, airport ap2)
