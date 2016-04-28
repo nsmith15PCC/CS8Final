@@ -3,8 +3,6 @@
 #include "route.h"
 #include "dnode.h"
 
-void getLine(string &line);
-
 int main()
 {
     map<string,string> airlines;
@@ -19,9 +17,9 @@ int main()
     {
         string origin, destination;
         cout<<"Please enter origin: ";
-        getLine(origin);
+        getline (cin, origin);
         cout<<"Please enter destination: ";
-        getLine(destination);
+        getline (cin, destination);
 
 
         vector<route> path = djikstra(origin, destination, airlines, airports);
@@ -48,20 +46,4 @@ int main()
     }
     while (again.size() && toupper(again.at(0)) == 'Y');
     return 0;
-}
-
-void getLine(string &line)
-{
-    int pos = 0;
-    getline(cin,line);
-    for(int i = 0; i < line.size(); i++)
-    {
-        if(96<line[i]<123)
-            line[i]-=32;
-    }
-    while((pos = line.find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ "))<string::npos)
-    {
-        cout << "INVALID INPUT\n";
-        exit(0);
-    }
 }
