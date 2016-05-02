@@ -29,8 +29,8 @@ int main()
             airport a1 = airports.find(it->origin)->second, a2 = airports.find(it->destination)->second;
             vector<string> al = it->airline;
             sort(al.begin(), al.end());
-            cout<<"Fly "<<it->distance<<" miles"<<endl<<"    from "<<it->origin<<" ("<<a1.name<<")\n    to "
-               <<it->destination<<" ("<<a2.name<<")\n    on ";
+            cout<<"Fly "<<it->distance<<" miles"<<endl<<"    from "<<it->origin<<" ("<<a1.name<<", "<<a1.city<<", "<<a1.country<<")\n    to "
+               <<it->destination<<" ("<<a2.name<<", "<<a2.city<<", "<<a2.country<<")\n    on ";
             for (short i = 0; i < al.size(); ++i)
             {
                 cout<<airlines.find(al.at(i))->second<<" or ";

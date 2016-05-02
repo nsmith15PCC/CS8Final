@@ -8,7 +8,7 @@
 
 struct airport
 {
-    string name, IATA;
+    string name, IATA, city, country;
     double latitude, longitude;
     std::set<route> connections;
 };

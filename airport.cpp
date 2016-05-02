@@ -17,8 +17,11 @@ void createAirports (map<string, airport> &airports)
         pos = line.find(',');
         
         ap.name = line.substr(pos + 1, line.find(',', pos + 1) - (pos + 1));
-        for (size_t i = 0; i < 3; ++i)
-            pos = line.find(',', pos + 1);
+        pos = line.find(',', pos + 1);
+        ap.city = line.substr(pos + 1, line.find(',', pos + 1) - (pos + 1));
+        pos = line.find(',', pos + 1);
+        ap.country = line.substr(pos + 1, line.find(',', pos + 1) - (pos + 1));
+        pos = line.find(',', pos + 1);
         ap.IATA = line.substr(pos + 1, line.find(',', pos + 1) - (pos + 1));
         for (size_t i = 0; i < 2; ++i)
             pos = line.find(',', pos + 1);
